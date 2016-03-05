@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react-native');
-var DocumentSelectionState = require('../react-native/Libraries/vendor/document/selection/DocumentSelectionState');
 
 var { 
   TextInput, 
@@ -9,18 +8,11 @@ var {
   PropTypes
 } = React;
 
-class MaskedText extends React.Component {
+class MaskedTextInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selection: { start: 0, end: 0 }
-    };
-
-    this.onSelectionChange = this.onSelectionChange.bind(this);
-    this.select = this.select.bind(this);
     this.render = this.render.bind(this);
     this.onChange = this.onChange.bind(this);
-    // this.onChangeText = this.onChangeText.bind(this);
     this._isDigit = this._isDigit.bind(this);
     this._matchesMask = this._matchesMask.bind(this);
     this._isAlpha = this._isAlpha.bind(this);
@@ -28,11 +20,12 @@ class MaskedText extends React.Component {
   }
 
   static propTypes = {
-      mask: React.PropTypes.string.isRequired,
-      value: React.PropTypes.string.isRequired
+      mask: React.PropTypes.string.isRequired
   };
 
   _isDigit(n) {
+    // let re = /[0-9]/;
+    // return re.test(n);
     return Boolean([true, true, true, true, true, true, true, true, true, true][n]);
   }
 
@@ -56,41 +49,29 @@ class MaskedText extends React.Component {
     return staticChars.indexOf(n) >= 0;
   }
 
-  onSelectionChange({nativeEvent: {selection}}) {
-    this.setState({selection});
-  }
-
   onChange(event) {
     let text = event.nativeEvent.text,
         current = text.length - 1;
 
-    console.log(text);
-
     if (!this._matchesMask(text.charAt(current), this.props.mask.charAt(current))) {
-      console.log('doesn\'t match mask');
       if (this._matchesMask(text.charAt(current), this.props.mask.charAt(current + 1))
        && this._isStaticChar(this.props.mask.charAt(current))) {
-        console.log('adding static mask');
         text = [text.slice(0, current), this.props.mask.charAt(current), text.slice(current)].join('');
       } else if (text.length > 0) {  
-        console.log('removing char')
         text = text.substr(0, current);    
-        console.log(text);
       }
     }
 
     this.textInput.refs.input.setNativeProps(text);
 
     if (this.props.onChange) {
-      console.log(text);
       event.nativeEvent.text = text;
       this.props.onChange(event);
     }
-  }
 
-  select(start, end) {
-    this.textInput.focus();
-    this.setState({selection: {start, end}});
+    if (this.props.onChangeText) {
+      this.props.onChangeText(text);
+    }
   }
 
   render() {
@@ -104,10 +85,9 @@ class MaskedText extends React.Component {
                 style={this.props.style}
                 onChange={this.onChange}
                 onEndEditing={this.props.onEndEditing}
-                selection={this.state.selection}
                 autoFocus></TextInput>
           </View>);
   }
 }
 
-module.exports = MaskedText;
+module.exports = MaskedTextInput;
