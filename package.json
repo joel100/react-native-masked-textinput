@@ -1,0 +1,24 @@
+{
+  "name": "react-native-masked-text",
+  "version": "0.0.1",
+  "description": "Masked Text input for react native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/joel100/react-native-masked-text.git"
+  },
+  "keywords": [
+    "react-native",
+    "masked",
+    "input"
+  ],
+  "author": "Joel McCormick",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joel100/react-native-masked-text/issues"
+  },
+  "homepage": "https://github.com/joel100/react-native-masked-text#readme"
+}
