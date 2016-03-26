@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/joel100/react-native-masked-text.git"
+    "url": "git+ssh://git@github.com/joel100/react-native-masked-textinput.git"
   },
   "keywords": [
     "react-native",
