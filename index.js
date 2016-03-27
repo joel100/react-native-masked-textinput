@@ -67,7 +67,7 @@ class MaskedTextInput extends React.Component {
                   onSubmitEditing={this.props.onSubmitEditing}
                   placeholderTextColor={this.props.placeholderTextColor}
                   returnKeyType={this.props.returnKeyType}
-                  autoCapitalize={locals.autoCapitalize}/>);
+                  autoCapitalize={this.props.autoCapitalize}/>);
     } else {
       return  (<TextInput 
                 ref={textInput => this.textInput = textInput}
