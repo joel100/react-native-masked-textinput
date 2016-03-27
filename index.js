@@ -1,8 +1,9 @@
 'use strict';
 
-var React = require('react-native');
+const React = require('react-native'),
+      FloatLabelTextInput = require('react-native-floating-label-text-input');
 
-var { 
+const { 
   TextInput, 
   View,
   PropTypes
@@ -17,10 +18,12 @@ class MaskedTextInput extends React.Component {
     this._matchesMask = this._matchesMask.bind(this);
     this._isAlpha = this._isAlpha.bind(this);
     this._isStaticChar = this._isStaticChar.bind(this);
+    this._getInputField = this._getInputField.bind(this);
   }
 
   static propTypes = {
-      mask: React.PropTypes.string.isRequired
+      mask: React.PropTypes.string.isRequired,
+      useFloatingLabel: React.PropTypes.Boolean
   };
 
   _isDigit(n) {
@@ -49,6 +52,40 @@ class MaskedTextInput extends React.Component {
     return staticChars.indexOf(n) >= 0;
   }
 
+  _getInputField() {
+    if (this.props.useFloatingLabel) {
+      return ( <FloatLabelTextInput
+                  ref={textInput => this.textInput = textInput}                  
+                  onChangeTextValue={this.onChangeText}                  
+                  onSelectionChanged={this.props.onSelectionChanged}                 
+                  value={this.props.value}
+                  placeholder={this.props.placeholder}
+                  style={this.props.style}
+                  onChange={this.onChange}
+                  onEndEditing={this.props.onEndEditing}
+                  onFocus={this.props.onFocus}
+                  onSubmitEditing={this.props.onSubmitEditing}
+                  placeholderTextColor={this.props.placeholderTextColor}
+                  returnKeyType={this.props.returnKeyType}
+                  autoCapitalize={locals.autoCapitalize}/>);
+    } else {
+      return  (<TextInput 
+                ref={textInput => this.textInput = textInput}
+                onChangeText={this.onChangeText} 
+                onSelectionChange={this.props.onSelectionChange} 
+                value={this.props.value}
+                placeholder={this.props.placeholder}
+                style={this.props.style}
+                onChange={this.onChange}
+                onEndEditing={this.props.onEndEditing}
+                onFocus={this.props.onFocus}
+                onSubmitEditing={this.props.onSubmitEditing}
+                placeholderTextColor={this.props.placeholderTextColor}
+                returnKeyType={this.props.returnKeyType}
+                autoCapitalize={this.props.autoCapitalize}></TextInput>);
+    }
+  }
+
   onChange(event) {
     let text = event.nativeEvent.text,
         current = text.length - 1;
@@ -62,7 +99,11 @@ class MaskedTextInput extends React.Component {
       }
     }
 
-    this.textInput.refs.input.setNativeProps(text);
+    if (this.props.useFloatingLabel) {
+      this.textInput.setText(text);
+    } else {
+      this.textInput.refs.input.setNativeProps(text);
+    }    
 
     if (this.props.onChange) {
       event.nativeEvent.text = text;
@@ -76,16 +117,7 @@ class MaskedTextInput extends React.Component {
 
   render() {
     return (<View>
-              <TextInput 
-                ref={textInput => this.textInput = textInput}
-                onChangeText={this.onChangeText} 
-                onSelectionChange={this.onSelectionChange} 
-                value={this.props.value}
-                placeholder={this.props.placeholder}
-                style={this.props.style}
-                onChange={this.onChange}
-                onEndEditing={this.props.onEndEditing}
-                autoFocus></TextInput>
+             {this._getInputField()}
           </View>);
   }
 }

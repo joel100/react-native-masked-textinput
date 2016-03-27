@@ -15,6 +15,12 @@
     "masked",
     "input"
   ],
+  "dependencies": {
+    "react-native-floating-label-text-input": "git+https://github.com/joel100/react-native-floating-label-text-input.git"
+  },
+  "peerDependencies": {
+    "react-native": "^0.22"
+  },
   "author": "Joel McCormick",
   "license": "MIT",
   "bugs": {
