@@ -1,15 +1,10 @@
 'use strict';
 
-const React = require('react-native'),
-      FloatLabelTextInput = require('react-native-floating-label-text-input');
+import React from 'react';
+import FloatLabelTextInput from 'react-native-floating-label-text-input';
+import { TextInput, View, PropTypes } from 'react-native';
 
-const { 
-  TextInput, 
-  View,
-  PropTypes
-} = React;
-
-class MaskedTextInput extends React.Component {
+export default class MaskedTextInput extends React.Component {
   constructor(props) {
     super(props);
     this.render = this.render.bind(this);
@@ -121,5 +116,3 @@ class MaskedTextInput extends React.Component {
           </View>);
   }
 }
-
-module.exports = MaskedTextInput;
