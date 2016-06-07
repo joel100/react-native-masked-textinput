@@ -17,8 +17,7 @@ export default class MaskedTextInput extends React.Component {
   }
 
   static propTypes = {
-      mask: React.PropTypes.string.isRequired,
-      useFloatingLabel: React.PropTypes.Boolean
+      mask: React.PropTypes.string.isRequired
   };
 
   _isDigit(n) {
